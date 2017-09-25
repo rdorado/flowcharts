@@ -155,7 +155,7 @@ public class MainFrame extends JFrame implements ActionListener{
 							if(!filename.endsWith(".dfe")) filename=filename+".dfe";
 							dc.saveAsXMLTo(filename);
 						} catch (Exception e2) {
-							System.out.println("ERROR: no se pudo guardar el archivo. [MainFrame]");
+							e2.printStackTrace();
 						}
 						
 						tabbedPane.setTitleAt(selIndex, fc.getSelectedFile().getName());
@@ -167,7 +167,6 @@ public class MainFrame extends JFrame implements ActionListener{
 							dc.saveAsXMLTo(dc.filename);
 						} catch (Exception e2) {
 							e2.printStackTrace();
-							System.out.println("ERROR: no se pudo guardar el archivo. [MainFrame]");
 						}
 					}
 						
@@ -193,7 +192,7 @@ public class MainFrame extends JFrame implements ActionListener{
 						if(!filename.endsWith(".dfe")) filename=filename+".dfe";
 						dc.saveAsXMLTo(filename);
 					} catch (Exception e2) {
-						System.out.println("ERROR: no se pudo guardar el archivo. [MainFrame]");
+						e2.printStackTrace();
 					}
 					
 					tabbedPane.setTitleAt(selIndex, fc.getSelectedFile().getName());
@@ -211,7 +210,6 @@ public class MainFrame extends JFrame implements ActionListener{
 					tabbedPane.setSelectedComponent(dp);
 				} catch (Exception e2) {
 					e2.printStackTrace();
-					System.out.println("ERROR: no se pudo abrir el archivo. [MainFrame]");
 				}
 
 			}

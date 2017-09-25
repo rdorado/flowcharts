@@ -132,7 +132,6 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 		Document doc = dBuilder.parse(xmlFile);
 		inFile=true;
 		this.filename=filename;
-		//System.out.println( doc.getFirstChild().getNodeName() );
 
 		Node node = doc.getFirstChild();
 		ncons = Integer.parseInt( ((Element)node).getAttribute("ncons") );
@@ -151,11 +150,9 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 
 		}
 
-		//System.out.println( ((Element)node).getAttribute("x") );
 	}
 
 	public void saveImage(String filename, String type) {
-	//	System.out.println(getSize().width+" "+getHeight());
 		//BufferedImage image = new BufferedImage(300, 300, BufferedImage.TYPE_INT_RGB);
 		if(type.equals("svg")){
 			try{
@@ -194,7 +191,6 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 		g.fillRect(0, 0, getWidth(), getHeight());
 
 		for (GraphicalElement element : elements) {
-			System.out.println(element);
 			element.paint(g);
 
 			/*if(element instanceof VardefElement){
@@ -274,7 +270,6 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 		if(stool.equals("arrow")){
 			boolean nonselected=true;
 			for (GraphicalElement element : elements) {
-			//	System.out.println(element+" "+element.collide(e.getX(),e.getY()));
 				if(element.collide(e.getX(),e.getY())){
 					nonselected=false;
 					moveOffset = element.getOffset(e.getX(),e.getY());
@@ -378,7 +373,6 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 			elements.add(connectorElement);
 		}
 		else if(stool.equals("node")){		
-			System.out.println("-->"+e.getX()+" "+e.getY());
 			NodeElement nodeElement = new NodeElement(++ncons, e.getX(), e.getY(), 8, 8);
 			elements.add(nodeElement);
 		}
@@ -446,7 +440,6 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 			settingRelation=false;
 			repaint();
 		}
-		System.out.println("\n\n\n\n");
 	}
 
 	@Override

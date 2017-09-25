@@ -44,7 +44,6 @@ public class NodeElement extends GraphicalTextualElement {
 
 	@Override
 	void paintElement(Graphics g) {
-		System.out.println(x+" "+y+width+" "+height);
 		  g.setColor(Color.LIGHT_GRAY);
 		  g.drawOval(x, y, width, height);
 		  g.setColor(Color.BLACK);  
@@ -53,7 +52,6 @@ public class NodeElement extends GraphicalTextualElement {
 /*
 	@Override
 	public boolean collide(int x, int y) {
-		System.out.println("-->"+this.x+" "+this.y+" "+x+" "+y+" "+Math.sqrt( Math.pow(this.x-x,2) + Math.pow(this.y-y,2) ));
 		return Math.sqrt( Math.pow(this.x-x,2) + Math.pow(this.y-y,2) ) < 6;
 	}
 

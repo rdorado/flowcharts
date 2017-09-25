@@ -29,8 +29,6 @@ public class StartElement extends GraphicalTextualElement{
 		//g.setColor(Color.black);
 	    g.drawOval(x, y, width, height);
 	    
-	    //System.out.println(width+" "+height);
-	    
 	    paintCenteredText(g);
 	}
 	

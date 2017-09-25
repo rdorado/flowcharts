@@ -52,7 +52,6 @@ public class ArrowElement extends GraphicalRelationElement{
 				nodes.add(new NodeElement(x, y, arc));
 				
 				
-				//System.out.println("-->x="+x+", y="+y+", arc="+arc);
 			}
 			
 		}
@@ -140,7 +139,6 @@ public class ArrowElement extends GraphicalRelationElement{
 		
 		
 		if(from_side.equals("R")){
-			System.out.println(from_side);
 			x1 = from.x + from.width;
 			y1 = from.y + (from.height/2);
 		}*/

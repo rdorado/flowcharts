@@ -167,28 +167,21 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 			}
 		}
 		else if(cx<(this.x+this.width)&&cx>(this.x+this.width-8)){
-			System.out.println("Left");
 			if(this.y<cy&&cy-this.y<8){
-				System.out.println("Up");
 				return DragType.STRETCH_RU;
 			}
 			else if(cy<(this.y+this.height)&&cy>(this.y+this.height-8)){
-				System.out.println("Down");
 				return DragType.STRETCH_RD;
 			}
 			else if(cy<(this.y+(this.height/2)+4)&&cy>(this.y+(this.height/2)-4)){
-				System.out.println("Middle");
 				return DragType.STRETCH_R;
 			}
 		}
 		else if(cx<(this.x+(this.width/2)+4)&&cx>(this.x+(this.width/2)-4)){
-			System.out.println("Centrado");
 			if(this.y<cy&&cy-this.y<8){
-				System.out.println("Up");
 				return DragType.STRETCH_U;
 			}
 			else if(cy<(this.y+this.height)&&cy>(this.y+this.height-8)){
-				System.out.println("Down");
 				return DragType.STRETCH_D;
 			}
 		}
@@ -196,7 +189,6 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 	}
 	
 	public void changeSize(int l, int u, int r, int d){
-		System.out.println(l);
 		if(l!=0){
 			x-=l;
 			width+=l;
