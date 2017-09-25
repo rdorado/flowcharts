@@ -144,6 +144,8 @@ public class MainFrame extends JFrame implements ActionListener{
 				
 				if(!dc.inFile){
 					JFileChooser fc = new JFileChooser();
+					String lastSavedFolder = PropertyFileManager.getProperty("last.saved.folder");
+					if(lastSavedFolder!=null) fc.setCurrentDirectory(new File(lastSavedFolder)); 					
 					fc.setFileFilter(new FileNameExtensionFilter("Flowchart Editor", "dfe"));				
 					int returnVal = fc.showSaveDialog(this);
 					
@@ -158,6 +160,7 @@ public class MainFrame extends JFrame implements ActionListener{
 						}
 						
 						tabbedPane.setTitleAt(selIndex, fc.getSelectedFile().getName());
+						PropertyFileManager.setProperty("last.saved.folder", fc.getCurrentDirectory().getAbsolutePath());
 					}
 				}
 				else{
@@ -229,6 +232,8 @@ public class MainFrame extends JFrame implements ActionListener{
 			if(selIndex!=-1){
 				
 				JFileChooser fc = new JFileChooser();
+				String lastExportedFolder = PropertyFileManager.getProperty("last.exported.folder");
+				if(lastExportedFolder!=null) fc.setCurrentDirectory(new File(lastExportedFolder));
 				fc.setAcceptAllFileFilterUsed(false);
 				String writerNames[] = ImageIO.getWriterFormatNames();
 				String writerNamesTmp[] = new String[writerNames.length+1];
@@ -248,6 +253,8 @@ public class MainFrame extends JFrame implements ActionListener{
 					
 					if(f.getName().endsWith("."+ext)) dc.saveImage(f.getAbsolutePath(), ext);
 					else dc.saveImage(f.getAbsolutePath()+"."+ext, ext);
+					
+					PropertyFileManager.setProperty("last.exported.folder", fc.getCurrentDirectory().getAbsolutePath());
 				}
 			}
 			
