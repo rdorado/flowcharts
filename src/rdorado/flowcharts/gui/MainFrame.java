@@ -6,8 +6,6 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -18,8 +16,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
-import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import util.PropertyFileManager;
 
 public class MainFrame extends JFrame implements ActionListener{
 	
@@ -181,7 +180,10 @@ public class MainFrame extends JFrame implements ActionListener{
 			if(selIndex!=-1){
 				DocumentCanvas dc = (DocumentCanvas)tabbedPane.getComponent(selIndex);
 				
+				String lastSavedFolder = PropertyFileManager.getProperty("last.saved.folder");
+				
 				JFileChooser fc = new JFileChooser();
+				if(lastSavedFolder!=null) fc.setCurrentDirectory(new File(lastSavedFolder)); 
 				fc.setFileFilter(new FileNameExtensionFilter("Flowchart Editor", "dfe"));				
 				int returnVal = fc.showSaveDialog(this);
 				
@@ -196,11 +198,16 @@ public class MainFrame extends JFrame implements ActionListener{
 					}
 					
 					tabbedPane.setTitleAt(selIndex, fc.getSelectedFile().getName());
+					PropertyFileManager.setProperty("last.saved.folder", fc.getCurrentDirectory().getAbsolutePath());
 				}
 			}
 		}
 		else if(command.equals("Open")){
+			String lastOpenedFolder = PropertyFileManager.getProperty("last.opened.folder");
+			
 			JFileChooser fc = new JFileChooser();
+			if(lastOpenedFolder!=null) fc.setCurrentDirectory(new File(lastOpenedFolder)); 
+				
 			fc.setFileFilter(new FileNameExtensionFilter("Flowchart Editor", "dfe"));
 			int returnVal = fc.showOpenDialog(this);
 			if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -211,7 +218,7 @@ public class MainFrame extends JFrame implements ActionListener{
 				} catch (Exception e2) {
 					e2.printStackTrace();
 				}
-
+				PropertyFileManager.setProperty("last.opened.folder", fc.getCurrentDirectory().getAbsolutePath());
 			}
 		}
 		else if(command.startsWith("Exit")){
