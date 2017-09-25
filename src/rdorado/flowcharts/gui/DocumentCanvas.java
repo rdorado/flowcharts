@@ -146,6 +146,9 @@ public class DocumentCanvas extends JPanel implements MouseListener, MouseMotion
 					startSymbol= (StartElement)el;
 					hasStart=true; 	
 				}
+				else if(el instanceof VardefElement){
+					((VardefElement)el).setStartSymbol(startSymbol);
+				}
 			}
 
 		}

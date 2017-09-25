@@ -83,6 +83,8 @@ public class VardefElement extends GraphicalTextualElement{
 
 
 	public void paintVardefLine(Graphics g) {
+		if(startElement==null) return;
+		
 		int x1 = startElement.x + startElement.width;
 		int y1 = startElement.y + startElement.height/2;
 		
