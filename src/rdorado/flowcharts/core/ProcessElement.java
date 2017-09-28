@@ -42,7 +42,8 @@ public class ProcessElement extends GraphicalTextualElement{
 		String resp = "";
 		resp+="<rect x=\""+x+"\" y=\""+y+"\" width=\""+width+"\" height=\""+height+"\" style=\"stroke:black;fill:none\" />";
 		int ty = (height+SVG_FONT_SIZE-2)/2;
-	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
+		String svgCenteredText = getMultilineTextAsSVG("\\\\n");
+	    resp+=svgCenteredText;
 		return resp;
 		
 	}
@@ -73,7 +74,8 @@ public class ProcessElement extends GraphicalTextualElement{
 		//g.setColor(Color.black);
 	    g.drawRect(x, y, width, height);
 	    
-	    paintCenteredText(g);
+	    //paintCenteredText(g);
+	    paintMultilineText(g, "\\\\n");
 	}
 	
 	public String getAsXML() {

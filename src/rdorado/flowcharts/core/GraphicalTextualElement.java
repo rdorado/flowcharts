@@ -12,12 +12,12 @@ import rdorado.flowcharts.gui.DragType;
 public abstract class GraphicalTextualElement extends GraphicalElement{
 
 	public static final int SVG_FONT_SIZE=12;
-	
+
 	int x;
 	int y;
 	int height;
 	int width;
-	
+
 	public GraphicalTextualElement(int id, int x, int y, int height, int width) {
 		this.x=x;
 		this.y=y;
@@ -25,7 +25,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 		this.width=width;
 		this.id=id;
 	}
-	
+
 	public GraphicalTextualElement(int id, int x, int y, int height, int width, String text) {
 		this.x=x;
 		this.y=y;
@@ -57,7 +57,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 	public void setY(int y) {
 		this.y = y;
 	}
-	
+
 	public Point getMiddlePoint() {
 		int mx = x+(width/2);
 		int my = y+(height/2);
@@ -79,82 +79,84 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 	public void setWidth(int width) {
 		this.width = width;
 	}	
-	
+
 	public void setSelected(boolean selected) {
 		this.selected=selected;		
 	}
-	
+
 	public void paint(Graphics g){
 		g.setColor(Color.black);
-		
+
 		if(selected){			
 			int selSize=5;
-			
+
 			g.drawRect(x, y, selSize, selSize);
 			g.drawRect(x+(width-selSize), y, selSize, selSize);
 			g.drawRect(x, y+(height-selSize), selSize, selSize);
 			g.drawRect(x+(width-selSize), y+(height-selSize), selSize, selSize);
-			
+
 			int mHeight = (height-selSize)/2;
 			int mWidth = (width-selSize)/2;
 			g.drawRect(x+mWidth, y, selSize, selSize);
 			g.drawRect(x, y+mHeight, selSize, selSize);
 			g.drawRect(x+mWidth, y+(height-selSize), selSize, selSize);
 			g.drawRect(x+(width-selSize), y+mHeight, selSize, selSize);
-			
+
 		}			
-		
+
 		paintElement(g);
-				
-		
+
+
 	}
-	
-	
+
+
 	protected void paintCenteredText(Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
 		Rectangle2D rect = fm.getStringBounds(text, g);
-		
+
 		int textHeight = (int)(rect.getHeight()); 
 		int textWidth  = (int)(rect.getWidth());
-		
+
 		int tx = (width  - textWidth)  / 2;
 		int ty = (height - textHeight) / 2  + fm.getAscent();
+
 		
+		//paintMultilineText(g, text, "\n");
 		g.drawString(text, x + tx, y + ty);
 
 	}
-	
+
 	protected void paintVariableList(Graphics g){
-		
-		
+
+
 		int yoffset = 25; 
 		int xoffset = 5;
-		
+
 		String[] lines = text.split(",");
 		for (int i = 0; i < lines.length; i++) {
 			String line = lines[i].trim();
-			
+
 			g.drawString(line, x + xoffset, y + yoffset + i*14);
 		}
-		
-		
+
+
 	}
-	
+
 	public boolean collide(int px, int py) {
 		if(px >= x && px <= x + width && py >= y && py <= y+height) return true;
 		return false;
 	}
-	
+
 	public void move(int x, int y) {
 		this.x=x;
 		this.y=y;		
 	}
-	
+
 	public Point getOffset(int x, int y) {
 		return new Point(x - this.x, y - this.y);
 	}
 	public DragType getDragType(int cx, int cy) {
-		
+
 		if(this.x<cx&&cx-this.x<8){
 			if(this.y<cy&&cy-this.y<8){
 				return DragType.STRETCH_LU;
@@ -187,7 +189,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 		}
 		return DragType.MOVE;
 	}
-	
+
 	public void changeSize(int l, int u, int r, int d){
 		if(l!=0){
 			x-=l;
@@ -206,5 +208,30 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 	}
 
 
+	public void paintMultilineText(Graphics g, String endlLineChar){
+		String[] lines = text.split(endlLineChar);
+		FontMetrics fm = g.getFontMetrics();
+		int ty = y + (height/2)+5 -((lines.length-1)*7); // - (lines.length*14)/2 ; //  (height - textHeight) / 2  + fm.getAscent();
+		
+		for(int i=0;i<lines.length;i++) {
+			Rectangle2D rect = fm.getStringBounds(lines[i], g);
+			int textWidth  = (int)(rect.getWidth());
+			int tx = (width  - textWidth)  / 2;
+			
+			g.drawString(lines[i], x + tx, ty+(i*14));
+		}
+	}
+	
+	String getMultilineTextAsSVG(String endlLineChar){
+		String[] lines = text.split(endlLineChar);
+		String resp = "";
+		int ty = y + (height/2)+5 -((lines.length-1)*7); // - (lines.length*14)/2 ; //  (height - textHeight) / 2  + fm.getAscent();
+		
+		for(int i=0;i<lines.length;i++) {			
+			resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(ty+(i*14))+"\">"+lines[i]+"</text>\n";
+		}		
+		
+		return resp;
+	};
 	
 }

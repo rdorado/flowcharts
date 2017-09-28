@@ -65,9 +65,10 @@ public class VardefElement extends GraphicalTextualElement{
 	    g.drawLine(x, y, x, y + height + lines.length*14);
 	    
 	    
-	    for(int i=0;i<vars.size();i++) {
+	    /*for(int i=0;i<vars.size();i++) {
 	    	g.drawString(vars.get(i), x+4, y+(i*14)+25);
-		}
+		}*/
+	    
 	    
 	    paintVariableList(g);
 	    
