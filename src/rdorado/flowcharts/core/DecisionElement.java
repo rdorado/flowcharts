@@ -40,7 +40,8 @@ public class DecisionElement extends GraphicalTextualElement{
 	    g.drawLine(x+width, my, mx, y+height);
 	    g.drawLine(mx, y+height, x, my);
 	     
-	    paintCenteredText(g);
+	    //paintCenteredText(g);
+	    paintMultilineText(g, "\\\\n");
 	}
 	
 	public String getAsXML() {
@@ -62,8 +63,10 @@ public class DecisionElement extends GraphicalTextualElement{
 	    resp+="<line x1=\""+(mx)+"\" y1=\""+(y+height)+"\" x2=\""+(x)+"\" y2=\""+(my)+"\" style=\"stroke:black\" />\n";
 	    
 		int ty = (height+SVG_FONT_SIZE-2)/2;
-	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
-		
+	    //resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
+	    String svgCenteredText = getMultilineTextAsSVG("\\\\n");
+	    resp+=svgCenteredText;
+	    	    
 		return resp;
 	}
 
