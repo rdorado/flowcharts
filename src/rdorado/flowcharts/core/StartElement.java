@@ -1,6 +1,5 @@
 package rdorado.flowcharts.core;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import org.w3c.dom.Element;
@@ -12,7 +11,7 @@ public class StartElement extends GraphicalTextualElement{
 
 	public StartElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "START";
+		setText("START");
 	}
 	public StartElement(Node node, DocumentCanvas dc){
 		super();
@@ -21,7 +20,7 @@ public class StartElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}
 
 	@Override
@@ -37,13 +36,13 @@ public class StartElement extends GraphicalTextualElement{
 		String resp = "";
 		resp+="<ellipse cx=\""+(x+(width/2))+"\" cy=\""+(y+(height/2))+"\" rx=\""+(width/2)+"\" ry=\""+(height/2)+"\" style=\"stroke:black;\" fill-opacity=\"0\"/>";
 		int ty = (height+SVG_FONT_SIZE-2)/2;
-	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
+	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+getScapedText()+"</text>";
 		return resp;
 	}
 
 	@Override
 	public String getAsXML() {
-		return "<start id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\" />";
+		return "<start id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\" />";
 	}
 	
 	@Override

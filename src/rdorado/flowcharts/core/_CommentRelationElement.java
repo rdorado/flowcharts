@@ -1,13 +1,6 @@
 package rdorado.flowcharts.core;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Stroke;
-import java.awt.geom.Line2D;
-import java.awt.geom.Rectangle2D;
 
 public class _CommentRelationElement extends GraphicalRelationElement{
 	
@@ -15,12 +8,12 @@ public class _CommentRelationElement extends GraphicalRelationElement{
 	
 	public _CommentRelationElement(GraphicalTextualElement from, GraphicalTextualElement to) {
 	//	super(from, to);
-		this.text="";
+		this.setText("");
 	}
 
 	public _CommentRelationElement(GraphicalTextualElement from, GraphicalTextualElement to, String text) {
 	//	super(from, to);
-		this.text=text;
+		this.setText(text);
 	}	
 	
 	@Override
@@ -54,7 +47,7 @@ public class _CommentRelationElement extends GraphicalRelationElement{
 	}
 	
 	public String getAsXML() {
-		return "<comment>"+text+"</comment>";
+		return "<comment>"+getScapedText()+"</comment>";
 	}
 
 	@Override

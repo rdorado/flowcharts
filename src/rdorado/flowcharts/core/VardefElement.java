@@ -6,12 +6,10 @@ import java.awt.Graphics2D;
 import java.awt.Stroke;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.Hashtable;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 import rdorado.flowcharts.gui.DocumentCanvas;
 
@@ -25,7 +23,7 @@ public class VardefElement extends GraphicalTextualElement{
 	
 	public VardefElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "Variables:";
+		setText("Variables:");
 	}
 	
 	
@@ -38,7 +36,7 @@ public class VardefElement extends GraphicalTextualElement{
 		id = Integer.parseInt( ((Element)node).getAttribute("id") );
 		x = Integer.parseInt( ((Element)node).getAttribute("x") );
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
-		text= ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 		width=80;
 		height=20;
 		
@@ -48,7 +46,7 @@ public class VardefElement extends GraphicalTextualElement{
 				vars.add( ((Element)list.item(i)).getAttribute("text") );
 			}			
 		}*/
-		String[] lines = text.split(",");
+		String[] lines = getText().split(",");
 		height+=lines.length*14;
 		
 	}		
@@ -60,24 +58,16 @@ public class VardefElement extends GraphicalTextualElement{
 	    g.drawString("Variables", x+4, y+10);
 	    g.drawLine(x, y+12, x + width, y+12);
 	    
-	    
-	    String[] lines = text.split(",");
+	    String[] lines = getText().split(",");
 	    g.drawLine(x, y, x, y + height + lines.length*14);
 	    
-	    
-	    /*for(int i=0;i<vars.size();i++) {
-	    	g.drawString(vars.get(i), x+4, y+(i*14)+25);
-		}*/
-	    
-	    
 	    paintVariableList(g);
-	    
 	    paintVardefLine(g);
 	}
 	
 	public String getAsXML() {
-		String ret = "<vardef id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+text+"\">\n"; 
-		ret+="  <var text=\""+text+"\"/>\n";                                                                            
+		String ret = "<vardef id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+getText()+"\">\n"; 
+		ret+="  <var text=\""+getText()+"\"/>\n";                                                                            
 		ret+=" </vardef>";
 		return ret;
 	}
@@ -112,7 +102,7 @@ public class VardefElement extends GraphicalTextualElement{
 	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" x=\""+(x+4)+"\" y=\""+(y+10)+"\">Variables</text>\n";
 	    resp+="<line x1=\""+x+"\" y1=\""+(y+12)+"\" x2=\""+(x+width)+"\" y2=\""+(y+12)+"\" style=\"stroke:black\" />\n";
 	    
-	    String[] lines = text.split(",");
+	    String[] lines = getScapedText().split(",");
 		resp+="<line x1=\""+x+"\" y1=\""+y+"\" x2=\""+(x)+"\" y2=\""+(y+height+(lines.length*14))+"\" style=\"stroke:black\" />\n";
 
 		int yoffset = 25; 

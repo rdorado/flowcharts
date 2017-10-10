@@ -6,7 +6,7 @@ public class FunctionElement extends GraphicalTextualElement{
 
 	public FunctionElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "function_name() to Z";
+		setText("function_name() to Z");
 	}
 
 	@Override
@@ -18,7 +18,7 @@ public class FunctionElement extends GraphicalTextualElement{
 		g.drawLine(x, y, x, y+height);
 		g.drawLine(x+ width, y, x+ width, y+height);
 		
-		g.drawString(text, x+4, y+12);
+		g.drawString(getText(), x+4, y+12);
 	}
 
 	@Override

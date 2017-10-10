@@ -11,7 +11,7 @@ public class DecisionElement extends GraphicalTextualElement{
 	
 	public DecisionElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "Decision ...";
+		setText("Decision ...");
 	}
 	
 	public DecisionElement(int id, int x, int y, int height, int width, String text) {
@@ -25,7 +25,7 @@ public class DecisionElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}
 
 	@Override
@@ -45,7 +45,7 @@ public class DecisionElement extends GraphicalTextualElement{
 	}
 	
 	public String getAsXML() {
-		return "<decision id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+text+"\" height=\""+height+"\" width=\""+width+"\" />";
+		return "<decision id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+getScapedText()+"\" height=\""+height+"\" width=\""+width+"\" />";
 	}
 
 	@Override
@@ -62,8 +62,6 @@ public class DecisionElement extends GraphicalTextualElement{
 	    resp+="<line x1=\""+(x+width)+"\" y1=\""+(my)+"\" x2=\""+(mx)+"\" y2=\""+(y+height)+"\" style=\"stroke:black\" />\n";
 	    resp+="<line x1=\""+(mx)+"\" y1=\""+(y+height)+"\" x2=\""+(x)+"\" y2=\""+(my)+"\" style=\"stroke:black\" />\n";
 	    
-		int ty = (height+SVG_FONT_SIZE-2)/2;
-	    //resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
 	    String svgCenteredText = getMultilineTextAsSVG("\\\\n");
 	    resp+=svgCenteredText;
 	    	    

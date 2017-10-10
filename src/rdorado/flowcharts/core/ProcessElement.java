@@ -11,7 +11,7 @@ public class ProcessElement extends GraphicalTextualElement{
 
 	public ProcessElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "Process ...";
+		setText("Process ...");
 	}
 	
 	public ProcessElement(Node node, DocumentCanvas dc){
@@ -21,7 +21,7 @@ public class ProcessElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}	
 	
 	public ProcessElement(int id, int x, int y, int height, int width, String text) {
@@ -34,14 +34,13 @@ public class ProcessElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}	
 	
 	@Override
 	public String getAsSVG() {
 		String resp = "";
 		resp+="<rect x=\""+x+"\" y=\""+y+"\" width=\""+width+"\" height=\""+height+"\" style=\"stroke:black;fill:none\" />";
-		int ty = (height+SVG_FONT_SIZE-2)/2;
 		String svgCenteredText = getMultilineTextAsSVG("\\\\n");
 	    resp+=svgCenteredText;
 		return resp;
@@ -79,7 +78,7 @@ public class ProcessElement extends GraphicalTextualElement{
 	}
 	
 	public String getAsXML() {
-		return "<process id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\" />";
+		return "<process id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\" />";
 	}
 
 

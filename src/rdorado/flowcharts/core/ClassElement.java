@@ -6,7 +6,7 @@ public class ClassElement extends GraphicalTextualElement{
 
 	public ClassElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "class_name";
+		setText("class_name");
 	}
 	
 	@Override
@@ -18,7 +18,7 @@ public class ClassElement extends GraphicalTextualElement{
 
 	@Override
 	public String getAsXML() {	
-		return "<class id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\" />";
+		return "<class id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\" />";
 	}
 
 	@Override

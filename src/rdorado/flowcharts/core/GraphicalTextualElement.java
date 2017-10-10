@@ -5,8 +5,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.geom.Rectangle2D;
 
-import org.w3c.dom.Node;
-
 import rdorado.flowcharts.gui.DragType;
 
 public abstract class GraphicalTextualElement extends GraphicalElement{
@@ -31,7 +29,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 		this.y=y;
 		this.height=height;
 		this.width=width;
-		this.text=text;
+		this.setText(text);
 		this.id=id;
 	}
 
@@ -112,7 +110,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 
 	protected void paintCenteredText(Graphics g) {
 		FontMetrics fm = g.getFontMetrics();
-		Rectangle2D rect = fm.getStringBounds(text, g);
+		Rectangle2D rect = fm.getStringBounds(getText(), g);
 
 		int textHeight = (int)(rect.getHeight()); 
 		int textWidth  = (int)(rect.getWidth());
@@ -122,7 +120,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 
 		
 		//paintMultilineText(g, text, "\n");
-		g.drawString(text, x + tx, y + ty);
+		g.drawString(getText(), x + tx, y + ty);
 
 	}
 
@@ -132,7 +130,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 		int yoffset = 25; 
 		int xoffset = 5;
 
-		String[] lines = text.split(",");
+		String[] lines = getText().split(",");
 		for (int i = 0; i < lines.length; i++) {
 			String line = lines[i].trim();
 
@@ -209,7 +207,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 
 
 	public void paintMultilineText(Graphics g, String endlLineChar){
-		String[] lines = text.split(endlLineChar);
+		String[] lines = getText().split(endlLineChar);
 		FontMetrics fm = g.getFontMetrics();
 		int ty = y + (height/2)+5 -((lines.length-1)*7); // - (lines.length*14)/2 ; //  (height - textHeight) / 2  + fm.getAscent();
 		
@@ -223,7 +221,7 @@ public abstract class GraphicalTextualElement extends GraphicalElement{
 	}
 	
 	String getMultilineTextAsSVG(String endlLineChar){
-		String[] lines = text.split(endlLineChar);
+		String[] lines = getScapedText().split(endlLineChar);
 		String resp = "";
 		int ty = y + (height/2)+5 -((lines.length-1)*7); // - (lines.length*14)/2 ; //  (height - textHeight) / 2  + fm.getAscent();
 		

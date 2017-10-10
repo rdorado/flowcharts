@@ -1,9 +1,7 @@
 package rdorado.flowcharts.core;
 
-import java.awt.Color;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
 
@@ -12,8 +10,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import rdorado.flowcharts.gui.DocumentCanvas;
-import rdorado.flowcharts.gui.DragType;
-import util.MyMath;
 
 public class ArrowElement extends GraphicalRelationElement{
 	
@@ -23,7 +19,7 @@ public class ArrowElement extends GraphicalRelationElement{
 	
 	public ArrowElement(GraphicalTextualElement from, GraphicalTextualElement to) {
 		super(from, to);
-		this.text="";
+		this.setText("");
 	}
 	
 	
@@ -31,7 +27,7 @@ public class ArrowElement extends GraphicalRelationElement{
 	public ArrowElement(Node node, DocumentCanvas dc){
 		super();
 		id = Integer.parseInt( ((Element)node).getAttribute("id") );
-		text =  ((Element)node).getAttribute("text") ;
+		setUnescapedText(  ((Element)node).getAttribute("text") );
 		int iFrom = Integer.parseInt( ((Element)node).getAttribute("from") );
 		int iTo = Integer.parseInt( ((Element)node).getAttribute("to") );
 		
@@ -59,9 +55,13 @@ public class ArrowElement extends GraphicalRelationElement{
 		
 	}	
 	
+
+
+
+
 	public ArrowElement(GraphicalTextualElement from, GraphicalTextualElement to, String text) {
 		//super(from, to);
-		this.text=text;
+		this.setText(text);
 	}	
 	/*
 	Point getInitialPoint(){
@@ -104,23 +104,10 @@ public class ArrowElement extends GraphicalRelationElement{
 	ArrayList<Point> getPoints(){
 		ArrayList<Point> points = new ArrayList<Point>();
 		
-		//points.add(new Point(x1, y1));
 		points.add( getComponentPoint(from,from_side) );
 		
 		for (NodeElement node : nodes) {
 			points.add(new Point(node.x, node.y, node.arc));
-		}
-		
-		int x2 = to.x + (to.width/2);
-		int y2 = to.y;	
-		
-		if(to_side.equals("L")){
-			x2 = to.x;
-			y2 = to.y + (to.height/2);
-		}
-		else if(to_side.equals("R")){
-			x2 = to.x + to.width;
-			y2 = to.y + (to.height/2);			
 		}
 		
 		points.add( getComponentPoint(to,to_side) );
@@ -132,10 +119,6 @@ public class ArrowElement extends GraphicalRelationElement{
 	void paintElement(Graphics g) {
 		/*int x1 = from.x + (from.width/2);
 		int y1 = from.y + from.height;
-		
-		
-	
-		
 		
 		
 		if(from_side.equals("R")){
@@ -174,9 +157,8 @@ public class ArrowElement extends GraphicalRelationElement{
 		
 		/** Paint text */
 		FontMetrics fm = g.getFontMetrics();
-		Rectangle2D rect = fm.getStringBounds(text, g);
+		Rectangle2D rect = fm.getStringBounds(getText(), g);
 		int textHeight = (int)(rect.getHeight()); 
-		int textWidth  = (int)(rect.getWidth());
 		
 		int x1 = points.get(0).x;
 		int y1 = points.get(0).y;
@@ -185,10 +167,8 @@ public class ArrowElement extends GraphicalRelationElement{
 		int y2 = points.get(1).y;
 		
 		double lineAngle = Math.atan2(y2-y1, x1-x2);
-		int tx = x1 - (int)(Math.cos(lineAngle + 0.810)*12);
 		int ty = y1 + (int)(Math.sin(lineAngle + 0.810)*12);
-		//g.drawString(text, tx - (textWidth/2), ty + (textHeight/2));
-		g.drawString(text, x1+6, ty + (textHeight/2));
+		g.drawString(getText(), x1+6, ty + (textHeight/2));
 		
 		
 		/** Paint arrow */
@@ -211,10 +191,6 @@ public class ArrowElement extends GraphicalRelationElement{
 			int xp2 = x2 + (int)(Math.cos(lineAngle+arrowAngle)*l);
 			int yp2 = y2 - (int)(Math.sin(lineAngle+arrowAngle)*l);
 			
-			//int tx = x1 - (int)(Math.cos(lineAngle + 0.700)*12);
-			//int ty = y1 + (int)(Math.sin(lineAngle + 0.700)*12);
-			
-		
 			g.fillPolygon(new int[]{x2, xp1, xp2},new int[]{y2, yp1, yp2}, 3);
 			
 		}
@@ -243,13 +219,9 @@ public class ArrowElement extends GraphicalRelationElement{
 		double lineAngle = Math.atan2(y2-y1, x1-x2);
 		
 		/** Paint text*/		
-		if(text!=null && !text.equals("")){
-			int textHeight = GraphicalTextualElement.SVG_FONT_SIZE; 
-			int textWidth  = text.length();			
-			
-			int tx = x1 - (int)(Math.cos(lineAngle + 0.700)*12);
+		if(getText()!=null && !getText().equals("")){
 			int ty = y1 + (int)(Math.sin(lineAngle + 0.700)*12);
-			resp+="<text font-family=\"Verdana\" font-size=\""+GraphicalTextualElement.SVG_FONT_SIZE+"\" x=\""+(x1+4)+"\" y=\""+(ty + 2)+"\">"+text+"</text>\n";
+			resp+="<text font-family=\"Verdana\" font-size=\""+GraphicalTextualElement.SVG_FONT_SIZE+"\" x=\""+(x1+4)+"\" y=\""+(ty + 2)+"\">"+getScapedText()+"</text>\n";
 		}
 				
 		/** Paint arrow*/
@@ -428,7 +400,7 @@ public class ArrowElement extends GraphicalRelationElement{
 		
 	}
 
-	private void drawArc(int x1, int y1, int x2, int y2, int x3, int y3, int arc, Graphics g) {
+	public void drawArc(int x1, int y1, int x2, int y2, int x3, int y3, int arc, Graphics g) {
 		
 		/*Graphics2D g2d = (Graphics2D)g;
 		
@@ -440,20 +412,9 @@ public class ArrowElement extends GraphicalRelationElement{
 		
 	}	
 	
-/*	private void drawArc(int x1, int y1, int x2, int y2, int arc, Graphics g) {
-		
-		/*Graphics2D g2d = (Graphics2D)g;
-		
-		g2d.rotate(Math.toRadians(45));
-		g2d.drawArc(0, -10, 150, 20, 180, 180);
-		g2d.rotate(Math.toRadians(-45));
-		g.drawArc(x, y, width, height, startAngle, arcAngle)*
-		g.drawLine(x1, y1, x2, y2);
-		
-	}*/
 
 	public String getAsXML() {
-		String ret = "<arrow id=\""+id+"\" from=\""+from.id+"\" to=\""+to.id+"\" text=\""+text+"\" from_side=\""+from_side+"\" to_side=\""+to_side+"\">\n"; 
+		String ret = "<arrow id=\""+id+"\" from=\""+from.id+"\" to=\""+to.id+"\" text=\""+getScapedText()+"\" from_side=\""+from_side+"\" to_side=\""+to_side+"\">\n"; 
 		for (NodeElement node : nodes) {
 			ret+="  <node x=\""+node.x+"\" y=\""+node.y+"\" arc=\""+node.arc+"\"/>\n";
 		}

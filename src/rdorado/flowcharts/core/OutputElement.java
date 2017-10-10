@@ -11,7 +11,7 @@ public class OutputElement extends GraphicalTextualElement{
 
 	public OutputElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "Process ...";
+		setText("Process ...");
 	}
 	
 	public OutputElement(int id, int x, int y, int height, int width, String text) {
@@ -24,7 +24,7 @@ public class OutputElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}
 	@Override
 	void paintElement(Graphics g) {
@@ -40,7 +40,7 @@ public class OutputElement extends GraphicalTextualElement{
 	}
 	
 	public String getAsXML() {
-		return "<output id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+text+"\" height=\""+height+"\" width=\""+width+"\" />";
+		return "<output id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" text=\""+getScapedText()+"\" height=\""+height+"\" width=\""+width+"\" />";
 	}
 
 	@Override
@@ -57,7 +57,7 @@ public class OutputElement extends GraphicalTextualElement{
 	    resp+="<line x1=\""+(x+width+10)+"\" y1=\""+(y+height)+"\" x2=\""+(x+width)+"\" y2=\""+(y+(height/2))+"\" style=\"stroke:black\" />\n";
 	    
 	    int ty = (height+SVG_FONT_SIZE-2)/2;
-	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
+	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+getScapedText()+"</text>";
 	    
 		return resp;
 	}

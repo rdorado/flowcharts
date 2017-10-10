@@ -1,6 +1,5 @@
 package rdorado.flowcharts.core;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 import org.w3c.dom.Element;
@@ -12,7 +11,7 @@ public class ConnectorElement extends GraphicalTextualElement{
 
 	public ConnectorElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "";
+		setText("");
 	}
 	public ConnectorElement(Node node, DocumentCanvas dc){
 		super();
@@ -21,7 +20,7 @@ public class ConnectorElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = "";
+		setText("");
 	}
 
 	@Override
@@ -34,7 +33,7 @@ public class ConnectorElement extends GraphicalTextualElement{
 
 	@Override
 	public String getAsXML() {
-		return "<connector id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\"/>";
+		return "<connector id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\"/>";
 	}
 	
 	@Override

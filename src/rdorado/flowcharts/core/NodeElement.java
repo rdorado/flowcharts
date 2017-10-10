@@ -7,7 +7,6 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import rdorado.flowcharts.gui.DocumentCanvas;
-import rdorado.flowcharts.gui.DragType;
 
 public class NodeElement extends GraphicalTextualElement {
 
@@ -21,7 +20,7 @@ public class NodeElement extends GraphicalTextualElement {
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}
 	
 	public NodeElement(int id, int x, int y, int height, int width) {
@@ -34,7 +33,7 @@ public class NodeElement extends GraphicalTextualElement {
 		this.y=y;	
 		this.width=8;
 		this.height=8;
-		text = "";
+		setText("");
 	}
 
 	public NodeElement(int x, int y, int arc) {
@@ -65,7 +64,7 @@ public class NodeElement extends GraphicalTextualElement {
 */
 	@Override
 	public String getAsXML() {
-		return "<node id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\"/>";
+		return "<node id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\"/>";
 	}
 	//public void changeSize(int l, int u, int r, int d){}
 

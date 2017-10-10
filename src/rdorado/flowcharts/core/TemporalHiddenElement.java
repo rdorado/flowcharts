@@ -1,13 +1,12 @@
 package rdorado.flowcharts.core;
 
-import java.awt.Color;
 import java.awt.Graphics;
 
 public class TemporalHiddenElement extends GraphicalTextualElement{
 
 	public TemporalHiddenElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "";
+		setText("");
 	}
 
 	@Override

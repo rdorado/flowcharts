@@ -11,7 +11,7 @@ public class EndElement extends GraphicalTextualElement{
 
 	public EndElement(int id, int x, int y, int height, int width) {
 		super(id, x, y, height, width);
-		text = "END";
+		setText("END");
 	}
 	
 	public EndElement(Node node, DocumentCanvas dc){
@@ -21,7 +21,7 @@ public class EndElement extends GraphicalTextualElement{
 		y = Integer.parseInt( ((Element)node).getAttribute("y") );
 		height = Integer.parseInt( ((Element)node).getAttribute("height") );
 		width = Integer.parseInt( ((Element)node).getAttribute("width") );
-		text = ((Element)node).getAttribute("text");
+		setUnescapedText( ((Element)node).getAttribute("text") );
 	}	
 
 	@Override
@@ -33,7 +33,7 @@ public class EndElement extends GraphicalTextualElement{
 	}
 	
 	public String getAsXML() {
-		return "<end id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+text+"\" />";
+		return "<end id=\""+id+"\" x=\""+x+"\" y=\""+y+"\" height=\""+height+"\" width=\""+width+"\" text=\""+getScapedText()+"\" />";
 	}
 
 	@Override
@@ -41,7 +41,7 @@ public class EndElement extends GraphicalTextualElement{
 		String resp = "";		
 		resp+="<ellipse cx=\""+(x+(width/2))+"\" cy=\""+(y+(height/2))+"\" rx=\""+(width/2)+"\" ry=\""+(height/2)+"\" style=\"stroke:black;\" fill-opacity=\"0\"/>";
 		int ty = (height+SVG_FONT_SIZE-2)/2;
-	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+text+"</text>";
+	    resp+="<text font-family=\"Verdana\" font-size=\""+SVG_FONT_SIZE+"\" text-anchor=\"middle\" x=\""+(x+(width/2))+"\" y=\""+(y+ty)+"\">"+getScapedText()+"</text>";
 		return resp;
 	}
 	

@@ -11,7 +11,7 @@ import rdorado.flowcharts.gui.DragType;
 public abstract class GraphicalElement {
 	
 	boolean selected;
-	String text;
+	private String text;
 	int id;
 	
 	abstract void paintElement(Graphics g);
@@ -58,5 +58,14 @@ public abstract class GraphicalElement {
 	public int getId(){
 		return id;
 	}	
+	
+	public String getScapedText(){
+		String tmp = text.replaceAll("<", "&lt;");
+		return tmp;
+	}
+	
+	public void setUnescapedText(String text) {
+		this.text = text.replaceAll("&lt;","<");		
+	}
 	
 }
